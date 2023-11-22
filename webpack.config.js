@@ -2,6 +2,7 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FileManagerPlugin = require('filemanager-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin')
 
 const mode = process.env.NODE_ENV || 'development'
 // const devMode = mode === 'development'
@@ -33,6 +34,23 @@ module.exports = {
 	devServer: {
 		watchFiles: path.join(__dirname, 'src'),
 		port: 9000,
+	},
+	optimization: {
+		minimizer: [
+			new ImageMinimizerPlugin({
+				minimizer: {
+					implementation: ImageMinimizerPlugin.imageminMinify,
+					options: {
+						plugins: [
+							['gifsicle', { interlaced: true }],
+							['jpegtran', { progressive: true }],
+							['optipng', { optimizationLevel: 5 }],
+							['svgo', { name: 'preset-default' }],
+						],
+					},
+				},
+			}),
+		],
 	},
 	module: {
 		rules: [
