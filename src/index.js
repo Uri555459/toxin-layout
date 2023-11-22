@@ -1,3 +1,5 @@
+import 'reset-css'
+
 import './style.scss'
 
 import './fonts/fonts.scss'
