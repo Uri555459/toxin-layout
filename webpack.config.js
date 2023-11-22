@@ -1,22 +1,34 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const FileManagerPlugin = require('filemanager-webpack-plugin')
 
 const mode = process.env.NODE_ENV || 'development'
 // const devMode = mode === 'development'
 
 module.exports = {
 	mode,
-	entry: './src/index.js',
+	entry: path.join(__dirname, 'src', 'index.js'),
 	output: {
-		filename: 'bundle.js',
-		path: path.resolve(__dirname, 'dist'),
+		filename: 'index.[contenthash:8].js',
+		path: path.join(__dirname, 'dist'),
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
 			template: path.join(__dirname, 'src', 'index.html'),
 			filename: 'index.html',
 		}),
+		new FileManagerPlugin({
+			events: {
+				onStart: {
+					delete: ['dist'],
+				},
+			},
+		}),
 	],
+	devServer: {
+		watchFiles: path.join(__dirname, 'src'),
+		port: 9000,
+	},
 	module: {
 		rules: [
 			{
@@ -41,6 +53,11 @@ module.exports = {
 			{
 				test: /\.pug$/,
 				loader: 'pug-loader',
+			},
+			{
+				test: /\.js$/,
+				use: 'babel-loader',
+				exclude: /node_modules/,
 			},
 		],
 	},

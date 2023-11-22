@@ -2,13 +2,14 @@ import './style.scss'
 
 import myImage from './img/code.png'
 
-function component() {
-	const myIcon = new Image()
-	myIcon.src = Icon
-
-	element.appendChild(myIcon)
-
-	return element
+const start = () => {
+	function component() {
+		const myIcon = new Image(100, 100)
+		myIcon.src = myImage
+		return myIcon
+	}
+	console.log('hi')
+	document.body.append(component())
 }
 
-document.body.appendChild(component())
+document.addEventListener('DOMContentLoaded', start)
