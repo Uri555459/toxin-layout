@@ -1,8 +1,12 @@
-function component() {
-	const element = document.createElement('div')
+import './style.scss'
 
-	// Lodash, currently included via a script, is required for this line to work
-	element.innerHTML = _.join(['Hello', 'webpack'], ' ')
+import myImage from './img/code.png'
+
+function component() {
+	const myIcon = new Image()
+	myIcon.src = Icon
+
+	element.appendChild(myIcon)
 
 	return element
 }
